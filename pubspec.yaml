@@ -36,6 +36,9 @@ dependencies:
   cupertino_icons: ^1.0.8 
   flutter_launcher_icons: "^0.14.3"
   get: ^4.7.2
+  firebase_core: ^2.24.2  # Corrected package name
+  firebase_auth: ^4.15.3   # Added for authentication
+  cloud_firestore: ^4.13.6 # Added for database
 
 dev_dependencies:
   flutter_test:
