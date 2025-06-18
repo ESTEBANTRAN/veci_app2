@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../routes.dart';
+
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
@@ -64,10 +66,11 @@ class LoginView extends StatelessWidget {
               
               // Enlace para registrarse
               TextButton(
-                onPressed: () {
-                  // Navegar a la pantalla de registro
-                },
-                child: const Text('¿No tienes cuenta? Regístrate'),
+                onPressed: () => Routes.goToCrearCuenta(),
+                child: const Text(
+                  '¿No tienes cuenta? Regístrate',
+                  style: TextStyle(color: Colors.blue),
+                ),
               ),
             ],
           ),
