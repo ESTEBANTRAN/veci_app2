@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../bloc/controllers/auth_controller.dart';
 
 class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+  HomeView({super.key});
+
+  final AuthController authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -12,13 +16,13 @@ class HomeView extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.notifications),
             onPressed: () {
-              // Implementar navegación a notificaciones
+              // Navegar a notificaciones o alarmas
             },
           ),
           IconButton(
             icon: const Icon(Icons.person),
             onPressed: () {
-              // Implementar navegación a perfil
+              // Navegar a perfil de usuario
             },
           ),
         ],
@@ -26,13 +30,16 @@ class HomeView extends StatelessWidget {
       drawer: Drawer(
         child: ListView(
           children: [
-            const UserAccountsDrawerHeader(
-              accountName: Text("Usuario"),
-              accountEmail: Text("usuario@example.com"),
-              currentAccountPicture: CircleAvatar(
-                child: Icon(Icons.person),
-              ),
-            ),
+            Obx(() {
+              final user = authController.userModel.value;
+              return UserAccountsDrawerHeader(
+                accountName: Text(user?.name ?? "Usuario"),
+                accountEmail: Text(user?.email ?? "usuario@example.com"),
+                currentAccountPicture: const CircleAvatar(
+                  child: Icon(Icons.person),
+                ),
+              );
+            }),
             ListTile(
               leading: const Icon(Icons.home),
               title: const Text('Inicio'),
@@ -44,14 +51,15 @@ class HomeView extends StatelessWidget {
               leading: const Icon(Icons.settings),
               title: const Text('Configuración'),
               onTap: () {
-                // Implementar navegación a configuración
+                // Navegar a configuración
               },
             ),
             ListTile(
               leading: const Icon(Icons.exit_to_app),
               title: const Text('Cerrar Sesión'),
-              onTap: () {
-                // Implementar lógica de cierre de sesión
+              onTap: () async {
+                await authController.signOut();
+                Get.offAllNamed('/login');
               },
             ),
           ],
@@ -64,31 +72,59 @@ class HomeView extends StatelessWidget {
         mainAxisSpacing: 16,
         children: [
           _buildMenuItem(
-            icon: Icons.shopping_cart,
-            title: 'Servicios',
+            icon: Icons.article,
+            title: 'Noticias',
+            color: Colors.orange,
             onTap: () {
-              // Implementar navegación a servicios
+              // Navegar a sección de noticias
+            },
+          ),
+          _buildMenuItem(
+            icon: Icons.message,
+            title: 'Mensajes',
+            color: Colors.blue,
+            onTap: () {
+              // Navegar a mensajes entre vecinos
+            },
+          ),
+          _buildMenuItem(
+            icon: Icons.notifications_active,
+            title: 'Alarmas',
+            color: Colors.red,
+            onTap: () {
+              // Navegar a alarmas o alertas vecinales
             },
           ),
           _buildMenuItem(
             icon: Icons.people,
             title: 'Comunidad',
+            color: Colors.green,
             onTap: () {
-              // Implementar navegación a comunidad
+              // Navegar a comunidad, vecinos cercanos, etc.
+            },
+          ),
+          _buildMenuItem(
+            icon: Icons.shopping_cart,
+            title: 'Servicios',
+            color: Colors.purple,
+            onTap: () {
+              // Navegar a servicios ofrecidos por vecinos o externos
             },
           ),
           _buildMenuItem(
             icon: Icons.event,
             title: 'Eventos',
+            color: Colors.teal,
             onTap: () {
-              // Implementar navegación a eventos
+              // Navegar a eventos de la ciudadela o barrio
             },
           ),
           _buildMenuItem(
             icon: Icons.help,
             title: 'Ayuda',
+            color: Colors.grey,
             onTap: () {
-              // Implementar navegación a ayuda
+              // Navegar a sección de ayuda o soporte
             },
           ),
         ],
@@ -99,6 +135,7 @@ class HomeView extends StatelessWidget {
   Widget _buildMenuItem({
     required IconData icon,
     required String title,
+    required Color color,
     required VoidCallback onTap,
   }) {
     return Card(
@@ -108,18 +145,11 @@ class HomeView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: 48,
-              color: Colors.blue,
-            ),
+            Icon(icon, size: 48, color: color),
             const SizedBox(height: 8),
             Text(
               title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ],
         ),

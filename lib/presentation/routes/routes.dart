@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
+import 'package:veci_app/ui/views/home_view.dart';
 //views
 import './views/welcome.dart';
 import './views/loggin/loggin.dart';
-import 'views/loggin.dart';
 import 'views/create_account.dart';
 
 class Routes {
@@ -22,16 +22,12 @@ class Routes {
     GetPage(
       name: login,
       page: () => const LoginView(),
-      transition: Transition.rightToLeft,
+      transition: Transition.fadeIn,
     ),
-    GetPage(
-      name: home,
-      page: () => const HomeView(),
-      transition: Transition.rightToLeft,
-    ),
+    GetPage(name: home, page: () => HomeView(), transition: Transition.fadeIn),
     GetPage(
       name: crearCuenta,
-      page: () => const CrearCuentaView(),
+      page: () => CrearCuentaView(),
       transition: Transition.rightToLeft,
     ),
   ];

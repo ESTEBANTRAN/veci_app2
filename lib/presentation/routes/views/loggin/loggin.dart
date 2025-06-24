@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../routes.dart';
+import '/../../bloc/controllers/auth_controller.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final AuthController authController = Get.put(AuthController());
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -18,16 +24,14 @@ class LoginView extends StatelessWidget {
               // Logo o título
               const Text(
                 'Bienvenido',
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 48),
-              
+
               // Campo de email
               TextFormField(
+                controller: emailController,
                 decoration: const InputDecoration(
                   labelText: 'Email',
                   border: OutlineInputBorder(),
@@ -36,9 +40,10 @@ class LoginView extends StatelessWidget {
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 16),
-              
+
               // Campo de contraseña
               TextFormField(
+                controller: passwordController,
                 decoration: const InputDecoration(
                   labelText: 'Contraseña',
                   border: OutlineInputBorder(),
@@ -47,11 +52,24 @@ class LoginView extends StatelessWidget {
                 obscureText: true,
               ),
               const SizedBox(height: 24),
-              
+
               // Botón de inicio de sesión
               ElevatedButton(
-                onPressed: () {
-                  // Implementar lógica de inicio de sesión
+                onPressed: () async {
+                  final email = emailController.text.trim();
+                  final password = passwordController.text.trim();
+                  final success = await authController
+                      .loginWithEmailAndPassword(email, password);
+                  if (success) {
+                    Routes.goToHome();
+                  } else {
+                    Get.snackbar(
+                      'Error',
+                      'Credenciales incorrectas o usuario no existe',
+                      backgroundColor: Colors.redAccent,
+                      colorText: Colors.white,
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
@@ -61,9 +79,9 @@ class LoginView extends StatelessWidget {
                   style: TextStyle(fontSize: 18),
                 ),
               ),
-              
+
               const SizedBox(height: 16),
-              
+
               // Enlace para registrarse
               TextButton(
                 onPressed: () => Routes.goToCrearCuenta(),
@@ -79,4 +97,3 @@ class LoginView extends StatelessWidget {
     );
   }
 }
-
