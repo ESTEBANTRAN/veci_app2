@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../../../data/model/user_model.dart';
 
 enum AuthStatus { initial, authenticated, unauthenticated }
@@ -115,5 +116,31 @@ class AuthController extends GetxController {
     await _firebaseAuth.signOut();
     userModel.value = null;
     authStatus.value = AuthStatus.unauthenticated;
+  }
+
+  // Enviar email de recuperación de contraseña
+  Future<void> sendPasswordResetEmail(String email) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
+  // Sign in with Google
+  Future<bool> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) return false;
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      await _firebaseAuth.signInWithCredential(credential);
+      authStatus.value = AuthStatus.authenticated;
+      await loadUserData();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }
