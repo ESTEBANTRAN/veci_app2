@@ -16,6 +16,7 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
+
   Get.put(AuthController());
   runApp(const MyApp());
 }
