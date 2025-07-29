@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../bloc/controllers/auth_controller.dart';
-import '../../routes/routes.dart';
+import '../../../../bloc/controllers/auth_controller.dart';
+import '../../routes.dart';
 
 class CrearCuentaView extends StatefulWidget {
   const CrearCuentaView({super.key});

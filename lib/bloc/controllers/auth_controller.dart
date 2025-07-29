@@ -9,7 +9,7 @@ enum AuthStatus { initial, authenticated, unauthenticated }
 
 class AuthController extends GetxController {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   late String uid;
   final Rx<UserModel?> userModel = Rx<UserModel?>(null);
@@ -39,7 +39,7 @@ class AuthController extends GetxController {
 
   Future<void> loadUserData() async {
     try {
-      final userDoc = await _firestore.collection('users').doc(uid).get();
+      final userDoc = await firestore.collection('users').doc(uid).get();
       if (userDoc.exists) {
         userModel.value = UserModel.fromMap(userDoc.data()!);
       }
@@ -85,7 +85,7 @@ class AuthController extends GetxController {
         role: role,
       );
 
-      await _firestore.collection('users').doc(uid).set(user.toMap());
+      await firestore.collection('users').doc(uid).set(user.toMap());
       userModel.value = user;
       authStatus.value = AuthStatus.authenticated;
       return true;

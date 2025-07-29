@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../bloc/controllers/auth_controller.dart';
+import '../../presentation/routes/routes.dart';
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});
@@ -51,7 +52,7 @@ class HomeView extends StatelessWidget {
               leading: const Icon(Icons.settings),
               title: const Text('Configuración'),
               onTap: () {
-                // Navegar a configuración
+                Routes.goToProfile();
               },
             ),
             ListTile(

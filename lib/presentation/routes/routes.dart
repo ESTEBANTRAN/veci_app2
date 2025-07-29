@@ -3,8 +3,9 @@ import 'package:veci_app/ui/views/home_view.dart';
 //views
 import './views/welcome.dart';
 import './views/loggin/loggin.dart';
-import 'views/create_account.dart';
+import 'views/profile/create_account.dart';
 import 'views/loggin/forgot.dart';
+import 'views/profile/profile_view.dart';
 
 class Routes {
   // Rutas estáticas
@@ -13,6 +14,7 @@ class Routes {
   static const String login = '/login';
   static const String crearCuenta = '/crear-cuenta';
   static const String forgotPassword = '/forgot-password';
+  static const String profile = '/profile';
 
   // Lista de páginas para GetX
   static final List<GetPage> pages = [
@@ -37,6 +39,11 @@ class Routes {
       page: () => ForgotPasswordView(),
       transition: Transition.fadeIn,
     ),
+    GetPage(
+      name: profile,
+      page: () => const ProfileView(),
+      transition: Transition.rightToLeft,
+    ),
   ];
 
   // Métodos de navegación helper
@@ -45,4 +52,5 @@ class Routes {
   static void goToCrearCuenta() => Get.toNamed(crearCuenta);
   static void goToForgotPassword() => Get.toNamed(forgotPassword);
   static void goBack() => Get.back();
+  static void goToProfile() => Get.toNamed(profile);
 }
