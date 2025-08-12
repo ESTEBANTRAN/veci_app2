@@ -41,6 +41,8 @@ dependencies:
   cloud_firestore: ^5.6.9 # Added for database
   google_sign_in: ^6.3.0 # Added for Google Sign-In
   firebase_storage: ^12.4.7 # Added for file storage
+  flutter_localizations:
+    sdk: flutter
   
 
 dev_dependencies:

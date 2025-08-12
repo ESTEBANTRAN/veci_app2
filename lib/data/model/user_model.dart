@@ -10,6 +10,7 @@ class UserModel {
   final String? city;
   final String? citadel;
   final String? houseNumber;
+  final String? zip;
   final DateTime? birthDate;
   final String? role;
 
@@ -25,6 +26,7 @@ class UserModel {
     this.city,
     this.citadel,
     this.houseNumber,
+    this.zip,
     this.birthDate,
     this.role,
   });
@@ -43,6 +45,7 @@ class UserModel {
       city: map['city'],
       citadel: map['citadel'],
       houseNumber: map['houseNumber'],
+      zip: map['zip'],
       birthDate: map['birthDate'] != null
           ? DateTime.tryParse(map['birthDate'])
           : null,
@@ -64,6 +67,7 @@ class UserModel {
       'city': city,
       'citadel': citadel,
       'houseNumber': houseNumber,
+      'zip': zip,
       'birthDate': birthDate?.toIso8601String(),
       'role': role,
     };

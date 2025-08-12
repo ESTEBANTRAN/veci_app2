@@ -23,7 +23,7 @@ class HomeView extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.person),
             onPressed: () {
-              // Navegar a perfil de usuario
+              Routes.goToProfile();
             },
           ),
         ],
@@ -49,9 +49,10 @@ class HomeView extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Configuración'),
+              leading: const Icon(Icons.person),
+              title: const Text('Mi Perfil'),
               onTap: () {
+                Navigator.pop(context);
                 Routes.goToProfile();
               },
             ),
